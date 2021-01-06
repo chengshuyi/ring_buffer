@@ -1,0 +1,2 @@
+add_executable(ring_buffer_test ring_buffer_test.c)
+target_link_libraries(ring_buffer_test ringbuffer)
