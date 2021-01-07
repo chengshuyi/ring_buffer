@@ -1,7 +1,7 @@
-#include "ring_buffer.h"
+#include "ring_buffer/ring_buffer.h"
+#include <string.h>
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
-#define max(a, b) ((a) > (b) ? (a) : (b))
 
 void rb_init(ring_buffer_t *rb, char *buf, uint32_t size)
 {
@@ -38,4 +38,20 @@ uint32_t rb_out(ring_buffer_t *rb, char *buf, uint32_t len)
     memcpy(buf + l, rb->buf, len - l);
     rb->out += len;
     return len;
+}
+
+uint32_t rb_peek(ring_buffer_t *rb, char *buf, uint32_t len)
+{
+    uint32_t l;
+    len = min(len, rb->in - rb->out);
+    l = min(len, rb->size - (rb->out & rb->mask));
+    memcpy(buf, rb->buf + (rb->out & rb->mask), l);
+    memcpy(buf + l, rb->buf, len - l);
+    // rb->out += len;
+    return len;
+}
+
+uint32_t rb_unused(ring_buffer_t *rb)
+{
+	return rb->size - rb->in + rb->out;
 }

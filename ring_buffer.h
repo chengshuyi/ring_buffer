@@ -23,5 +23,7 @@ typedef int8_t rb_err_t;
 void rb_init(ring_buffer_t *rb, char *buf, uint32_t size);
 uint32_t rb_in(ring_buffer_t *rb, char *buf, uint32_t len);
 uint32_t rb_out(ring_buffer_t *rb, char *buf, uint32_t len);
+uint32_t rb_peek(ring_buffer_t *rb, char *buf, uint32_t len);
+uint32_t rb_unused(ring_buffer_t *rb);
 
 #endif
